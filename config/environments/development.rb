@@ -22,14 +22,15 @@ Rails.application.configure do
   else
     config.action_controller.perform_caching = false
     
-    config.cache_store = :null_store
+    config.cache_store = :memory_store
+    # config.cache_store = :null_store
+    # config.cache_store = :memory_store    
   end
   
   # Store uploaded files on the local file system (see config/storage.yml for options).
   config.active_storage.service = :local
   
-  
-  config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }  
+  # config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }  
   # Don't care if the mailer can't send.
   config.action_mailer.raise_delivery_errors = false
   
@@ -44,8 +45,15 @@ Rails.application.configure do
   # Highlight code that triggered database queries in logs.
   config.active_record.verbose_query_logs = true
   
+  # Debug mode disables concatenation and preprocessing of assets.
+  # This option may cause significant delays in view rendering with a large
+  # number of complex assets.
+  # config.assets.debug = true
   
-  # Raises error for missing translations.
+  # Suppress logger output for asset requests.
+  # config.assets.quiet = true
+  
+  # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
   
   # Use an evented file watcher to asynchronously detect changes in source code,
