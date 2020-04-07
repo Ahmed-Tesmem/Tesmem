@@ -11,7 +11,7 @@ class User < ApplicationRecord
     User.where(email: auth.email, provider: auth_token.provider, uid: auth_token.uid).first_or_create do |user|
       user.email = auth.email
       user.password = SecureRandom.urlsafe_base64
-      user.username = auth.username
+      user.username = auth.name
       user.provider = auth_token.provider
       user.uid = auth_token.uid
     end
