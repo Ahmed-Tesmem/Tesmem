@@ -9,7 +9,6 @@ class User < ApplicationRecord
   def self.from_omniauth(auth_token)
     auth = auth_token.info
     User.where(email: auth.email, provider: auth_token.provider, uid: auth_token.uid).first_or_create do |user|
-      byebug
       user.email = auth.email
       user.password = SecureRandom.urlsafe_base64
       user.username = auth.username
