@@ -4,7 +4,6 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   respond_to :json
   
   def google_oauth2
-    byebug
     user = User.from_omniauth(request.env['omniauth.auth'])
     if user.present?
       if user.persisted?

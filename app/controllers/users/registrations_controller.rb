@@ -13,7 +13,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
   
   # POST /resource
   def create
-    byebug
     user = User.find_by_email(sign_up_params[:email])
     if user
       render json: { errors: { 'email' => [' is already taken'] } }, status: :unprocessable_entity

@@ -5,7 +5,6 @@ class Users::SessionsController < Devise::SessionsController
   
   # GET /resource/sign_in
   def new
-    byebug
     super.tap do |user|
       user.to_json
       # self.resource = User.find(sign_in_params[:email])
