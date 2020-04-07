@@ -18,7 +18,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   
   def facebook
     if request.env["omniauth.auth"].info.email.blank?
-      redirect_to "/users/auth/facebook?auth_type=rerequest&scope=email"
+      redirect_to "api/users/auth/facebook?auth_type=rerequest&scope=email"
       return
     end
     user = User.from_omniauth(request.env["omniauth.auth"])
@@ -27,7 +27,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
         render json: user
       else
         session["devise.facebook_data"] = request.env["omniauth.auth"]
-        User.create(session['devise.facebook_data'])
+        # User.create(session['devise.facebook_data'])
         render json: user.errors
       end
     end
