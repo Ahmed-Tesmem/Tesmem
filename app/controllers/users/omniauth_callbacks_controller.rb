@@ -26,7 +26,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       if user.persisted?
         render json: user
       else
-        session["devise.facebook_data"] = request.env["omniauth.auth"]
+        session["devise.facebook_data"] = request.env["omniauth.auth"].except(:extra)
         # User.create(session['devise.facebook_data'])
         render json: user.errors
       end

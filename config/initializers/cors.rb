@@ -8,9 +8,11 @@
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
     origins 'accounts.google.com', 'https://accounts.google.com', 'https://www.facebook.com/', 'facebook.com'
-    
-    resource '*',
-    headers: :any,
-    methods: %i[:get, :post, :put, :patch, :delete, :options, :head]
+    resource '/api/*',
+    headers: %w[Authorization],
+    methods: :any,
+    expose: %w[Authorization]
+    # headers: :any,
+    # methods: %i[:get, :post, :put, :patch, :delete, :options, :head]
   end
 end
