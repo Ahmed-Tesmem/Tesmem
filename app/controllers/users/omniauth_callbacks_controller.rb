@@ -10,7 +10,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
         render json: [user], status: :ok
       else
         session['devise.google_data'] = request.env['omniauth.auth'].except(:extra) 
-        # User.create(session['devise.google_data'])
+        User.create(session['devise.google_data'])
         render json: user.errors
       end
     end
@@ -27,7 +27,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
         render json: user
       else
         session["devise.facebook_data"] = request.env["omniauth.auth"]
-        # User.create(session['devise.facebook_data'])
+        User.create(session['devise.facebook_data'])
         render json: user.errors
       end
     end
