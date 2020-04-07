@@ -3,19 +3,23 @@
 class Users::RegistrationsController < Devise::RegistrationsController
   before_action :configure_sign_up_params, only: [:create]
   # before_action :configure_account_update_params, only: [:update]
+  respond_to :json
   
   # GET /resource/sign_up
   def new
-    # super
+    self.resource = User.new_with_session
+    render json: resource
   end
   
   # POST /resource
   def create
-    begin
-      self.resource = User.first_or_create(params)
-      render json: resource
-    rescue => e
-      raise errors if errors
+    byebug
+    user = User.find_by_email(sign_up_params[:email])
+    if user
+      render json: { errors: { 'email' => [' is already taken'] } }, status: :unprocessable_entity
+    else
+      user = User.create(sign_up_params)
+      render json: user, status: :created
     end
   end
   
@@ -23,12 +27,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   
   def configure_sign_up_params
     devise_parameter_sanitizer.permit(:sign_up) do |user_params|
-      user_params.permit(
-        :username,
-        :email,
-        :password,
-        :auth_type
-      )
+      user_params.permit(:id, :username, :email, :password, :provider, :uid)
     end
   end
   

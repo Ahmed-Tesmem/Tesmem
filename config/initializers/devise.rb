@@ -1,14 +1,17 @@
 # frozen_string_literal: true
 
+require 'omniauth-google-oauth2'
+require 'omniauth-facebook'
 # Use this hook to configure devise mailer, warden hooks and so forth.
 # Many of these configuration options can be set straight in your model.
 Devise.setup do |config|
+  
   # The secret key used by Devise. Devise uses this key to generate
   # random tokens. Changing this key will render invalid all existing
   # confirmation, reset password and unlock tokens in the database.
   # Devise will use the `secret_key_base` as its `secret_key`
   # by default. You can change it below and use your own secret key.
-  # config.secret_key = '7b89253c35c34b2e9dc9ac5b6c561f10a40f6a6b8886c60e1f2216cc815997cce9e2731975e5477d65b08438d39d0d91f3d551fef4aed183b00090a12a1ee0fd'
+  # config.secret_key = '4ca9d668ab51a1028cdf3f824d5a52bc5fba08ab90d9bec30366fea64c625f52eb846dee12621810bfebfb1e3e7648851e2c75d8faecf0edd06752ee2bc747e8'
   
   # ==> Controller configuration
   # Configure the parent class to the devise controllers.
@@ -40,8 +43,7 @@ Devise.setup do |config|
   # session. If you need permissions, you should implement that in a before filter.
   # You can also supply a hash where the value is a boolean determining whether
   # or not authentication should be aborted when the value is not present.
-  config.authentication_keys = [:email]
-  
+  # config.authentication_keys = [:email]
   
   # Configure parameters from the request object used for authentication. Each entry
   # given should be a request method and it will automatically be passed to the
@@ -115,7 +117,7 @@ Devise.setup do |config|
   config.stretches = Rails.env.test? ? 1 : 11
   
   # Set up a pepper to generate the hashed password.
-  # config.pepper = '44cf19b5deaf97fea7abe6c3883e61788f43fd2b7981b183d50b25b9686c288fb344dd7ac4d79ac848151dff7934e5c38aff1bde06081c75264913dd315ec0c4'
+  # config.pepper = 'f9f7aac6bc3c0c17e86691eb28678add99d82ad9ba93269289eea76596e3f49bf9c4a49dfc0594ebdbcf8a6422aff006884a2f599bb16adf3442f477804a3eb0'
   
   # Send a notification to the original email when the user's email is changed.
   # config.send_email_changed_notification = false
@@ -208,7 +210,7 @@ Devise.setup do |config|
   # ==> Configuration for :recoverable
   #
   # Defines which key will be used when recovering the password for an account
-  # config.reset_password_keys = [:login]
+  # config.reset_password_keys = [:email]
   
   # Time interval you can reset your password with a reset password key.
   # Don't put a too small interval or your users won't have the time to
@@ -233,7 +235,7 @@ Devise.setup do |config|
   # Turn scoped views on. Before rendering "sessions/new", it will first check for
   # "users/sessions/new". It's turned off by default because it's slower if you
   # are using only default views.
-  config.scoped_views = true
+  # config.scoped_views = true
   
   # Configure the default scope given to Warden. By default it's the first
   # devise role declared in your routes (usually :user).
@@ -241,7 +243,7 @@ Devise.setup do |config|
   
   # Set this configuration to false if you want /users/sign_out to sign out
   # only the current scope. By default, Devise signs out all scopes.
-  config.sign_out_all_scopes = true
+  # config.sign_out_all_scopes = true
   
   # ==> Navigation configuration
   # Lists the formats that should be treated as navigational. Formats like
@@ -252,7 +254,7 @@ Devise.setup do |config|
   # should add them to the navigational formats lists.
   #
   # The "*/*" below is required to match Internet Explorer requests.
-  # config.navigational_formats = ['*/*', :html]
+  config.navigational_formats = ['*/*', :html, :json]
   
   # The default HTTP method used to sign out a resource. Default is :delete.
   config.sign_out_via = :delete
@@ -260,7 +262,11 @@ Devise.setup do |config|
   # ==> OmniAuth
   # Add a new OmniAuth provider. Check the wiki for more information on setting
   # up on your models and hooks.
-  config.omniauth :google_oauth2, '221664870996-78sulh0e3o2umkvn0pomusr4of072ous.apps.googleusercontent.com', 'hAzJgrHmDv_90L-9DYJ-DhOk', scope: 'email,profile,openid'
+  # config.omniauth :github, 'APP_ID', 'APP_SECRET', scope: 'user,public_repo'
+  
+    # provider :google_oauth2, ENV['GOOGLE_KEY'], ENV['GOOGLE_SECRET'], scope: 'email,profile'
+  config.omniauth :google_oauth2, '388219266709-4u231sqb8l6ajcr4ab93ctvv3f0qvqj8.apps.googleusercontent.com', 'NKGZRW2R3fQu-wjQpEQQUGoo'
+  
   config.omniauth :facebook, '232359071217994', 'b543a9d9995d1e350b2cee2e7b47be1c', :strategy_class => OmniAuth::Strategies::Facebook,
   client_options: {
     site: 'https://graph.facebook.com/v4.0',
@@ -287,7 +293,7 @@ Devise.setup do |config|
   #
   # When using OmniAuth, Devise cannot automatically set OmniAuth path,
   # so you need to do it manually. For the users scope, it would be:
-  # config.omniauth_path_prefix = '/my_engine/users/auth'
+  config.omniauth_path_prefix = '/api/users/auth'
   
   # ==> Turbolinks configuration
   # If your app is using Turbolinks, Turbolinks::Controller needs to be included to make redirection work correctly:

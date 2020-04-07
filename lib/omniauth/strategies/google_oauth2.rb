@@ -7,7 +7,7 @@ require 'uri'
 module OmniAuth
   module Strategies
     # Main class for Google OAuth2 strategy.
-    class GoogleOauth2 < OmniAuth::Strategies::OAuth2
+    class GoogleOauth2 < lib::OmniAuth::Strategies::OAuth2
       ALLOWED_ISSUERS = ['accounts.google.com', 'https://accounts.google.com'].freeze
       BASE_SCOPE_URL = 'https://www.googleapis.com/auth/'
       BASE_SCOPES = %w[profile email openid].freeze
