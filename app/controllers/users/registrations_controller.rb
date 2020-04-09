@@ -6,10 +6,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
   respond_to :json
   
   # GET /resource/sign_up
-  def new
-    self.resource = User.new_with_session
-    render json: resource
-  end
+  # def new
+  #   self.resource = User.new_with_session
+  #   render json: resource
+  # end
   
   # POST /resource
   def create
@@ -32,7 +32,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   
   
   
-  # If you have extra params to permit, append them to the sanitizer.
+  # Isf you have extra params to permit, append them to the sanitizer.
   # def configure_account_update_params
   #   devise_parameter_sanitizer.permit(:account_update, keys: [:attribute])
   # end
