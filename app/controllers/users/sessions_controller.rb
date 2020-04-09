@@ -14,7 +14,6 @@ class Users::SessionsController < Devise::SessionsController
   end
   # POST /resource/sign_in
   def create
-    byebug
     @user = warden.authenticate!(sign_in_params)
     sign_in(user, @user)
     render json: {
