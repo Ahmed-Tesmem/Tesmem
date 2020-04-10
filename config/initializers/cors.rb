@@ -7,9 +7,10 @@
 
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
     allow do
-        origins 'accounts.google.com', 'https://accounts.google.com', 'https://www.facebook.com/', 'facebook.com'
-        resource '/api/*',
+        origins 'accounts.google.com', 'https://accounts.google.com', 'https://www.facebook.com/', 'facebook.com', 'https://tesmeem.herokuapp.com'
+        resource '*',
         headers: :any,
-        methods: %i[:get, :post, :put, :patch, :delete, :options, :head]
+        # :expose => ['access-token', 'expiry', 'token-type', 'uid', 'client'],
+        methods: [:get, :post, :put, :patch, :delete, :options, :head]
     end
 end
