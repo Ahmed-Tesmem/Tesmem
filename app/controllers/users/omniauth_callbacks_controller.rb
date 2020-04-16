@@ -1,15 +1,13 @@
- # frozen_string_literal: true
- 
- class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
+class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   respond_to :json
   
   def google_oauth2
-    @user = User.from_omniauth(request.env['omniauth.auth'])
-    if @user.present?
-      if @user.persisted?
-        render json:{user: @user, status: :ok }
+    user = User.from_omniauth(request.env['omniauth.auth'])
+    byebug
+    if user.present?
+      if user.persisted?
+        render json: {status: 'email already exist'}
       else
-        session['devise.google_data'] = request.env['omniauth.auth'].except(:extra) 
         render json: user.errors
       end
     end
@@ -25,10 +23,17 @@
       if user.persisted?
         render json: user
       else
-        session["devise.facebook_data"] = request.env["omniauth.auth"].except(:extra)
-        # User.create(session['devise.facebook_data'])
         render json: user.errors
       end
     end
   end
+  
+  # def passthru
+  #   # super do |format|
+  #   #   format.json {resource.errors}
+  #   # end
+  # end
+  # def failure
+  #   redirect_to root_path
+  # end
 end

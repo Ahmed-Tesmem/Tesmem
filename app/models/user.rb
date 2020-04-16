@@ -8,14 +8,14 @@ class User < ApplicationRecord
   
   validates_uniqueness_of :email
   
-  
-  def self.from_omniauth(auth)
-    User.where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
-      user.email = auth.info.email
+  def self.from_omniauth(auth_token)
+    auth = auth_token.info
+    User.where(provider: auth_token.provider, uid: auth_token.uid).first_or_create do |user|
+      user.email = auth.email
       user.password = SecureRandom.urlsafe_base64
-      user.username = auth.info.name
-      user.provider = auth.provider
-      user.uid = auth.uid
+      user.username = auth.name
+      user.provider = auth_token.provider
+      user.uid = auth_token.uid
     end
   end
   
@@ -31,6 +31,7 @@ class User < ApplicationRecord
     JWT.encode({ id: id, exp: 60.days.from_now.to_i }, Rails.application.secrets.secret_key_base)
   end
   
+  # mail sender
   def send_devise_notification(notification, *args)
     devise_mailer.send(notification, self, *args).deliver_later
   end
