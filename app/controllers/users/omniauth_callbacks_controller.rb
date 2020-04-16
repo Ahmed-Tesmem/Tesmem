@@ -3,7 +3,6 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   
   def google_oauth2
     user = User.from_omniauth(request.env['omniauth.auth'])
-    byebug
     if user.present?
       if user.persisted?
         render json: {status: 'email already exist'}
