@@ -5,7 +5,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     user = User.from_omniauth(request.env['omniauth.auth'])
     if user.present?
       if user.persisted?
-        render json: {status: 'email already exist'}
+        render json:{status: 'already registered', details: user}
       else
         render json: user.errors
       end
@@ -20,7 +20,8 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     user = User.from_omniauth(request.env["omniauth.auth"])
     if user.present?
       if user.persisted?
-        render json: user
+        render json:{status: 'already registered', details: user}
+        
       else
         render json: user.errors
       end
