@@ -3,34 +3,47 @@
 class Users::SessionsController < Devise::SessionsController
   respond_to :json
   
-  # GET /resource/sign_in
-  def new
-    # super.tap do |user|
-    #   user.to_json
-    self.resource = User.find_by_email(sign_in_params[:email])
-    clean_up_passwords(resource)
-    render json: resource
-    # end
-  end
-  # POST /resource/sign_in
   def create
-    @user = warden.authenticate!(sign_in_params)
-    sign_in(user, @user)
+    @user = User.find_by(email: session_params[:email])
+    if @user && @user.valid_password?(session_params[:password])
+      login!
+      render json: {
+        logged_in: true,
+        user: @user
+      }
+    else
+      render json: { 
+        status: 401,
+        errors: ['no such user', 'verify credentials and try again or signup']
+      }
+    end
+  end
+  
+  def is_logged_in?
+    if logged_in? && current_user
+      render json: {
+        logged_in: true,
+        user: current_user
+      }
+    else
+      render json: {
+        logged_in: false,
+        message: 'no such user'
+      }
+    end
+  end
+  
+  def destroy
+    logout!
     render json: {
-      status: :success,
-      data: [@user],
-      errors: @user.errors
+      status: 200,
+      logged_out: true
     }
-    # yield resource if block_given?
-    # respond_with resource do |format|
-    # format.json :resource
-    # end
-    # user = User.find_by_email(sign_in_params[:email])
-    # if user && user.valid_password?(sign_in_params[:password])
-    #   # current_user = user
-    #   render json: { users: { 'sessions' => [user] } }, status: :ok
-    # else
-    #   render json: { errors: { 'email or password' => ['is invalid'] } }, status: :unprocessable_entity
-    # end
+  end
+  
+  private
+  
+  def session_params
+    params.require(:user).permit(:username, :email, :password)
   end
 end

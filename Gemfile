@@ -15,10 +15,19 @@ gem 'jbuilder', '~> 2.7'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
 # Use Active Model has_secure_password
- gem 'bcrypt', '~> 3.1.7'
+gem 'bcrypt', '~> 3.1.7'
+gem 'devise'
+gem 'google-api-client'
+gem 'jwt', '>= 2.0'
+gem 'omniauth', '>= 1.1.1'
+gem 'omniauth-oauth2', '>= 1.6'
+gem 'omniauth-google-oauth2'
+gem 'omniauth-facebook'
+gem 'rspec', '~> 3.6'
+gem 'rubocop', '~> 0.49'
 
 # Use Active Storage variant
-# gem 'image_processing', '~> 1.2'
+gem 'image_processing', '~> 1.2'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.2', require: false
@@ -32,11 +41,7 @@ group :development, :test do
 end
 
 # Rails gem for authentications
-  gem 'devise'
-  gem 'jwt'
-  gem 'omniauth'
-  gem 'omniauth-facebook'
-  gem 'omniauth-google-oauth2'
+
 
 group :development do
   gem 'listen', '>= 3.0.5', '< 3.2'

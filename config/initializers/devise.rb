@@ -11,8 +11,8 @@ Devise.setup do |config|
   # confirmation, reset password and unlock tokens in the database.
   # Devise will use the `secret_key_base` as its `secret_key`
   # by default. You can change it below and use your own secret key.
-  # config.secret_key = '4ca9d668ab51a1028cdf3f824d5a52bc5fba08ab90d9bec30366fea64c625f52eb846dee12621810bfebfb1e3e7648851e2c75d8faecf0edd06752ee2bc747e8'
-  
+  # config.secret_key = 'a1843fd60f94336f743278427fd9abdd5381c60224d96dcec71f4ab1f3be21034587cf1fed4e1c91028d74b3609bbf52b7766ee5292d05ffeb185a02694f3ae3'
+  config.secret_key = 'a1843fd60f94336f743278427fd9abdd5381c60224d96dcec71f4ab1f3be21034587cf1fed4e1c91028d74b3609bbf52b7766ee5292d05ffeb185a02694f3ae3'
   # ==> Controller configuration
   # Configure the parent class to the devise controllers.
   # config.parent_controller = 'DeviseController'
@@ -50,7 +50,7 @@ Devise.setup do |config|
   # find_for_authentication method and considered in your model lookup. For instance,
   # if you set :request_keys to [:subdomain], :subdomain will be used on authentication.
   # The same considerations mentioned for authentication_keys also apply to request_keys.
-  # config.request_keys = []
+  config.request_keys = [:subdomain]
   
   # Configure which authentication keys should be case-insensitive.
   # These keys will be downcased upon creating or modifying a user and when used
@@ -66,14 +66,14 @@ Devise.setup do |config|
   # It can be set to an array that will enable params authentication only for the
   # given strategies, for example, `config.params_authenticatable = [:database]` will
   # enable it only for database (email + password) authentication.
-  # config.params_authenticatable = true
+  config.params_authenticatable = true
   
   # Tell if authentication through HTTP Auth is enabled. False by default.
   # It can be set to an array that will enable http authentication only for the
   # given strategies, for example, `config.http_authenticatable = [:database]` will
   # enable it only for database authentication. The supported strategies are:
   # :database      = Support basic authentication with authentication key + password
-  # config.http_authenticatable = false
+  config.http_authenticatable = true
   
   # If 401 status code should be returned for AJAX requests. True by default.
   # config.http_authenticatable_on_xhr = true
@@ -91,7 +91,7 @@ Devise.setup do |config|
   # Notice that if you are skipping storage for all authentication paths, you
   # may want to disable generating routes to Devise's sessions controller by
   # passing skip: :sessions to `devise_for` in your config/routes.rb
-  config.skip_session_storage = [:http_auth]
+  config.skip_session_storage = [:http_auth, :params_auth]  
   
   # By default, Devise cleans up the CSRF token on authentication to
   # avoid CSRF token fixation attacks. This means that, when using AJAX
@@ -114,7 +114,7 @@ Devise.setup do |config|
   # a value less than 10 in other environments. Note that, for bcrypt (the default
   # algorithm), the cost increases exponentially with the number of stretches (e.g.
   # a value of 20 is already extremely slow: approx. 60 seconds for 1 calculation).
-  config.stretches = Rails.env.test? ? 1 : 11
+  # config.stretches = Rails.env.test? ? 1 : 11
   
   # Set up a pepper to generate the hashed password.
   # config.pepper = 'f9f7aac6bc3c0c17e86691eb28678add99d82ad9ba93269289eea76596e3f49bf9c4a49dfc0594ebdbcf8a6422aff006884a2f599bb16adf3442f477804a3eb0'
@@ -264,10 +264,10 @@ Devise.setup do |config|
   # up on your models and hooks.
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', scope: 'user,public_repo'
   
-    # provider :google_oauth2, ENV['GOOGLE_KEY'], ENV['GOOGLE_SECRET'], scope: 'email,profile'
+  # provider :google_oauth2, ENV['GOOGLE_KEY'], ENV['GOOGLE_SECRET'], scope: 'email,profile'
   config.omniauth :google_oauth2, '388219266709-4u231sqb8l6ajcr4ab93ctvv3f0qvqj8.apps.googleusercontent.com', 'NKGZRW2R3fQu-wjQpEQQUGoo'
   
-  config.omniauth :facebook, '232359071217994', 'b543a9d9995d1e350b2cee2e7b47be1c', :strategy_class => OmniAuth::Strategies::Facebook,
+  config.omniauth :facebook, '232359071217994', 'b543a9d9995d1e350b2cee2e7b47be1c',#, :strategy_class => OmniAuth::Strategies::Facebook,
   client_options: {
     site: 'https://graph.facebook.com/v4.0',
     authorize_url: "https://www.facebook.com/v4.0/dialog/oauth"
